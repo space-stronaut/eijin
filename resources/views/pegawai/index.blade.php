@@ -24,15 +24,15 @@
                                 {{$item->name}}
                             </td>
                             <td>
-                                {{ count(App\Models\Status::where('user_id', $item->id)->get()) > 0 ? App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->status == 'masuk' ? 'Aktif' : 'Keluar' : ''}} - Keperluan : {{App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->keterangan }}
+                                {{ count(App\Models\Status::where('user_id', $item->id)->get()) > 0 ? App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->status == 'masuk' ? 'Aktif' : 'Keluar' : ''}} - Keperluan : {{ count(App\Models\Status::where('user_id', $item->id)->get()) > 0 ? App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->keterangan : ''}}
                             </td>
                             <td>
                                 {{
-                                $status = DB::table('status')
+                                count(App\Models\Status::where('user_id', $item->id)->get()) > 0 ? $status = DB::table('status')
                                 ->selectRaw('SEC_TO_TIME(SUM(TIME_TO_SEC(end_time - start_time))) as time')
                                 ->where('user_id', $item->id)
                                 ->groupBy('user_id')
-                                ->get()[0]->time;
+                                ->get()[0]->time : ''
                                 }}
                             </td>
                         </tr>
