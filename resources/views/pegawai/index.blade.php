@@ -24,7 +24,7 @@
                                 {{$item->name}}
                             </td>
                             <td>
-                                {{App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->status == 'masuk' ? 'Aktif' : 'Keluar'}} - Keperluan : {{App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->keterangan }}
+                                {{ count(App\Models\Status::where('user_id', $item->id)->get()) > 0 ? App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->status == 'masuk' ? 'Aktif' : 'Keluar' : ''}} - Keperluan : {{App\Models\Status::where('user_id', $item->id)->orderBy('updated_at', 'desc')->get()[0]->keterangan }}
                             </td>
                             <td>
                                 {{
